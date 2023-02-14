@@ -16,8 +16,10 @@ async function openingDraw(deckId) {
   );
   const draws = await response.json();
   draws.cards.forEach((draw) => {
-    playerValue + draw.value;
+    if ((draw.value = "1")) {
+    }
   });
+  return playerValue;
 }
 
 function startGame() {
