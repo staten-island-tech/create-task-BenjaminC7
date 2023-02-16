@@ -1,12 +1,18 @@
 import "../styles/style.css";
 import { DOM } from "./DOM";
-
-async function openingDraw() {
-  let playerValue = 0;
+async function startDeck() {
   const response = await fetch(
-    `https://deckofcardsapi.com/api/deck/new/draw/?count=2`
+    `https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`
+  );
+  const deck = await response.json();
+  return deck.deck_id;
+}
+async function openingDraw(deckId) {
+  const response = await fetch(
+    `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
   );
   const draws = await response.json();
+  let playerValue = 0;
   draws.cards.forEach((draw) => {
     console.log(draw.value);
     if (draw.value == "2") {
@@ -43,11 +49,14 @@ async function openingDraw() {
       console.log("Draw Error.");
     }
   });
+  return playerValue;
+}
+async function startGame() {
+  const deckId = await startDeck();
+  let playerValue = await openingDraw(deckId);
   console.log(playerValue);
   return playerValue;
 }
-
-function startGame() {
-  openingDraw();
-}
-startGame();
+DOM.startButton.addEventListener("click", function () {
+  startGame();
+});
