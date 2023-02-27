@@ -66,7 +66,6 @@ DOM.startButton.addEventListener("click", async function () {
   if (data.playerValue == 21) {
     console.log("You Win");
   }
-
   DOM.hitButton.addEventListener("click", async function () {
     let playerValue = data.playerValue;
     const response = await fetch(
@@ -110,7 +109,11 @@ DOM.startButton.addEventListener("click", async function () {
       }
     });
     console.log(playerValue);
-    data.playerValue = playerValue;
-    return data;
+    if (playerValue > 21) {
+      console.log("You bust...");
+    } else {
+      data.playerValue = playerValue;
+      return data;
+    }
   });
 });
