@@ -7,6 +7,43 @@ async function startDeck() {
   const deck = await response.json();
   return deck.deck_id;
 }
+function playerDraw(draw, playerValue) {
+  console.log(draw.value);
+  if (draw.value == "2") {
+    playerValue = playerValue + 2;
+  } else if (draw.value == "3") {
+    playerValue = playerValue + 3;
+  } else if (draw.value == "4") {
+    playerValue = playerValue + 4;
+  } else if (draw.value == "5") {
+    playerValue = playerValue + 5;
+  } else if (draw.value == "6") {
+    playerValue = playerValue + 6;
+  } else if (draw.value == "7") {
+    playerValue = playerValue + 7;
+  } else if (draw.value == "8") {
+    playerValue = playerValue + 8;
+  } else if (draw.value == "9") {
+    playerValue = playerValue + 9;
+  } else if (draw.value == "10") {
+    playerValue = playerValue + 10;
+  } else if (draw.value == "KING") {
+    playerValue = playerValue + 10;
+  } else if (draw.value == "JACK") {
+    playerValue = playerValue + 10;
+  } else if (draw.value == "QUEEN") {
+    playerValue = playerValue + 10;
+  } else if (draw.value == "ACE") {
+    if (playerValue <= 10) {
+      playerValue = playerValue + 11;
+    } else {
+      playerValue = playerValue + 1;
+    }
+  } else {
+    console.log("Draw Error.");
+  }
+  return playerValue;
+}
 async function openingDraw(deckId) {
   const response = await fetch(
     `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
@@ -14,40 +51,7 @@ async function openingDraw(deckId) {
   const draws = await response.json();
   let playerValue = 0;
   draws.cards.forEach((draw) => {
-    console.log(draw.value);
-    if (draw.value == "2") {
-      playerValue = playerValue + 2;
-    } else if (draw.value == "3") {
-      playerValue = playerValue + 3;
-    } else if (draw.value == "4") {
-      playerValue = playerValue + 4;
-    } else if (draw.value == "5") {
-      playerValue = playerValue + 5;
-    } else if (draw.value == "6") {
-      playerValue = playerValue + 6;
-    } else if (draw.value == "7") {
-      playerValue = playerValue + 7;
-    } else if (draw.value == "8") {
-      playerValue = playerValue + 8;
-    } else if (draw.value == "9") {
-      playerValue = playerValue + 9;
-    } else if (draw.value == "10") {
-      playerValue = playerValue + 10;
-    } else if (draw.value == "KING") {
-      playerValue = playerValue + 10;
-    } else if (draw.value == "JACK") {
-      playerValue = playerValue++ + 10;
-    } else if (draw.value == "QUEEN") {
-      playerValue = playerValue + 10;
-    } else if (draw.value == "ACE") {
-      if (playerValue <= 10) {
-        playerValue = playerValue + 11;
-      } else {
-        playerValue = playerValue + 1;
-      }
-    } else {
-      console.log("Draw Error.");
-    }
+    playerValue = playerDraw(draw, playerValue);
   });
   return playerValue;
 }
@@ -59,6 +63,11 @@ async function startGame() {
     playerValue: playerValue,
     deckId: deckId,
   };
+  DOM.startButton.insertAdjacentHTML(
+    "afterend",
+    `    <button id="hitButton">Hit</button>
+  <button id="standButton">Stand</button>`
+  );
   return data;
 }
 DOM.startButton.addEventListener("click", async function () {
@@ -66,51 +75,22 @@ DOM.startButton.addEventListener("click", async function () {
   if (data.playerValue == 21) {
     console.log("You Win");
   }
-  DOM.hitButton.addEventListener("click", async function () {
+  const hitButton = document.getElementById("hitButton");
+  const standButton = document.getElementById("standButton");
+  hitButton.addEventListener("click", async function () {
     let playerValue = data.playerValue;
     const response = await fetch(
       `https://deckofcardsapi.com/api/deck/${data.deckId}/draw/?count=1`
     );
     const draws = await response.json();
     draws.cards.forEach((draw) => {
-      console.log(draw.value);
-      if (draw.value == "2") {
-        playerValue = playerValue + 2;
-      } else if (draw.value == "3") {
-        playerValue = playerValue + 3;
-      } else if (draw.value == "4") {
-        playerValue = playerValue + 4;
-      } else if (draw.value == "5") {
-        playerValue = playerValue + 5;
-      } else if (draw.value == "6") {
-        playerValue = playerValue + 6;
-      } else if (draw.value == "7") {
-        playerValue = playerValue + 7;
-      } else if (draw.value == "8") {
-        playerValue = playerValue + 8;
-      } else if (draw.value == "9") {
-        playerValue = playerValue + 9;
-      } else if (draw.value == "10") {
-        playerValue = playerValue + 10;
-      } else if (draw.value == "KING") {
-        playerValue = playerValue + 10;
-      } else if (draw.value == "JACK") {
-        playerValue = playerValue++ + 10;
-      } else if (draw.value == "QUEEN") {
-        playerValue = playerValue + 10;
-      } else if (draw.value == "ACE") {
-        if (playerValue <= 10) {
-          playerValue = playerValue + 11;
-        } else {
-          playerValue = playerValue + 1;
-        }
-      } else {
-        console.log("Draw Error.");
-      }
+      playerValue = playerDraw(draw, playerValue);
     });
     console.log(playerValue);
     if (playerValue > 21) {
       console.log("You bust...");
+      hitButton.remove();
+      standButton.remove();
     } else {
       data.playerValue = playerValue;
       return data;
