@@ -1,1 +1,78 @@
-@import url(variables.css);
+:root{
+  --h1: 7.594rem;
+  --h2: 5.063rem;
+  --h3: 3.375rem;
+  --h4: 2.25rem;
+  --h5: 1.5rem;
+}
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  background-color: #186808;
+}
+#buttonHolder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.button{
+    text-decoration: none;
+    padding: 2rem 3rem;
+    display: inline-block;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    font-size: 2rem;
+    border: none;
+    border-radius: 10rem;
+    transition: all 0.2s;
+    background-color: white;
+}
+
+h1{
+    font-size: var(--h1);
+    color: white;
+    text-align: center;
+}
+h2{
+    font-size: var(--h2);
+    color: white;
+    text-align: center;
+}
+h3{
+    font-size: var(--h3);
+    color: white;
+    text-align: center;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+.total{
+    font-size: var(--h4);
+    color: white;
+    text-align: center;
+}
+#playerHand{
+    border: solid 0.5rem white;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+#dealerHand{
+    border: solid 0.5rem white;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+#hands{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+#endText{
+    font-size: var(--h3);
+    color: white;
+    text-align: center;
+}

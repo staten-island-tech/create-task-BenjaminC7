@@ -7,8 +7,24 @@
     <title>Vite App</title>
   </head>
   <body>
-    <button id="startButton">Start</button>
-    <button id="houseButton">Progress House</button>
+    <h1>Blackjack</h1>
+    <h2>Dealer must draw to 16 and stand on all 17s</h2>
+    <p id="endText"></p>
+    <div id="buttonHolder">
+      <button class="button" id="startButton">Start</button>
+    </div>
+    <div id="hands">
+      <div id="playerHand">
+        <h3>Player Hand</h3>
+        <div class="cards" id="playerCards"></div>
+        <p class="total" id="playerTotal">Player Total: 0</p>
+      </div>
+      <div id="dealerHand">
+        <h3>Dealer Hand</h3>
+        <div class="cards" id="dealerCards"></div>
+        <p class="total" id="dealerTotal">Dealer Total: 0</p>
+      </div>
+    </div>
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>
