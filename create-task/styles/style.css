@@ -59,17 +59,23 @@ h3{
     border: solid 0.5rem white;
     border-radius: 1rem;
     margin: 1rem;
+    width: 40%;
 }
 #dealerHand{
     border: solid 0.5rem white;
     border-radius: 1rem;
     margin: 1rem;
+    width: 40%;
+}
+.cards{
+    text-align: center;
 }
 #hands{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+
 }
 #endText{
     font-size: var(--h3);
